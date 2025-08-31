@@ -1,0 +1,13 @@
+# Shipfile for Django project deployment
+# Make sure YAML uses 2 spaces for indentation
+
+build:
+  # Install Python dependencies
+  command: pip install -r requirements.txt
+
+run:
+  # Apply migrations, collect static files, and start server
+  command: |
+    python manage.py migrate
+    python manage.py collectstatic --noinput
+    gunicorn myproject.wsgi --bind 0.0.0.0:$PORT
